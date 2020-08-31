@@ -7,16 +7,16 @@ export default new vuex.Store({
 state: {
     meals: [],
     meal: [],
-    searchWord: null,
+    categories: [],
+    aries: [],
+    ingredient: [],
+    searchMeal: null,
     filteredMeals: null,
   },
   getters: {
     allMeals: (state) => state.meals,
-
     getMeal: (state) => state.meal,
-
-    getSearchWord: (state) => state.searchWord,
-
+    getSearchWord: (state) => state.searchMeal,
     getFilteredMeals: (state) => state.filteredMeals
   },
   mutations: {
@@ -26,11 +26,11 @@ state: {
     GET_MEALS_LIST(state, payload) {
         state.meals = payload
     }, 
-    FILTERED_MEALS (state, word) {
-      if (word !== '') {
-          state.searchWord = word
+    FILTERED_MEALS (state, value) {
+      if (value !== '') {
+          state.searchMeal = value
           state.filteredMeals = state.meals.filter((meal) => {
-            return meal.strMeal.toLowerCase().includes(word)
+            return meal.strMeal.toLowerCase().includes(value)
           })
       }
     }
