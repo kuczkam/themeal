@@ -7,9 +7,6 @@ export default new vuex.Store({
 state: {
     meals: [],
     meal: [],
-    categories: [],
-    aries: [],
-    ingredient: [],
     searchMeal: null,
     filteredMeals: null,
   },
@@ -23,17 +20,34 @@ state: {
     SET_MEAL (state, course) {
       state.course = course
     },
-    GET_MEALS_LIST(state, payload) {
+    GET_MEALS_LIST (state, payload) {
         state.meals = payload
     }, 
-    FILTERED_MEALS (state, value) {
-      if (value !== '') {
-          state.searchMeal = value
+    FILTERED_MEALS_BY_NAME (state, name) {
+      if (name !== '') {
+          state.searchMeal = name
           state.filteredMeals = state.meals.filter((meal) => {
-            return meal.strMeal.toLowerCase().includes(value)
+            return meal.strMeal.toLowerCase().includes(name)
           })
       }
-    }
+    },
+    FILTERED_MEALS_BY_AREA (state, area) {
+         state.filteredMeals = state.meals.filter((meal) => {
+          return meal.strArea.includes(area)
+        })
+    },
+    FILTERED_MEALS_BY_CATEGORY (state, category) {
+      state.filteredMeals = state.meals.filter((meal) => {
+       return meal.strCategory.includes(category)
+     })
+    },
+    FILTERED_MEALS_BY_TAG (state, tag) {
+      state.filteredMeals = state.meals.filter((meal) => {
+        if (meal.strTags !== null) {
+            return meal.strTags.includes(tag)
+        }
+     })
+    }           
   },
   actions: {
     SET_MEAL ({ commit }) {
@@ -43,11 +57,21 @@ state: {
         axios
             .get('https://www.themealdb.com/api/json/v1/1/search.php?s=Soup')
             .then(response => {
-                commit('GET_MEALS_LIST', response.data.meals)
+              console.log(response.data.meals)
+              commit('GET_MEALS_LIST', response.data.meals)
         })
     },    
-    FILTERED_MEALS ({ commit }, word) {
-      commit('FILTERED_MEALS', word)
-    }
+    FILTERED_MEALS_BY_NAME ({ commit }, name) {
+      commit('FILTERED_MEALS_BY_NAME', name)
+    },
+    FILTERED_MEALS_BY_AREA ({ commit }, area) {
+      commit('FILTERED_MEALS_BY_AREA', area)
+    },
+    FILTERED_MEALS_BY_CATEGORY ({ commit }, category) {
+      commit('FILTERED_MEALS_BY_CATEGORY', category)
+    },
+    FILTERED_MEALS_BY_TAG ({ commit }, tag) {
+      commit('FILTERED_MEALS_BY_TAG', tag)
+    }    
   }
 })
