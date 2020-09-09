@@ -1,16 +1,16 @@
 <template>
-  <input type="text" v-model="searchWord" />
+  <input type="text" v-model="searchMeal" />
 </template>
 
 <script>
 export default {
   computed: {
-    searchWord: {
+    searchMeal: {
       get () {
-        return this.$store.state.searchWord
+        return this.$store.state.searchMeal
       },
-      set (value) {
-        this.$store.dispatch('FILTERED_MEALS', value)
+      set (name) {
+        this.$store.dispatch('FILTERED_MEALS_BY_NAME', name)
       }
     }    
   }
