@@ -1,15 +1,15 @@
 <template>
     <div class="container">
-        <ul>
-            <li v-for="(list, index) in meals" :key="index">
+        <ul class="filter">
+            <li v-for="(category, index) in categories" :key="index">
                 <input 
                 type="radio" 
                 class="hide" 
                 v-model="filterCategories" 
-                :id="list.strCategory" 
-                :value="list.strCategory" 
+                :id="category" 
+                :value="category" 
                 />
-                <label :for="list.strCategory">{{ list.strCategory }}</label>
+                <label :for="category">{{ category }}</label>
             </li>
         </ul>
     </div>
@@ -21,26 +21,20 @@ import { mapGetters } from "vuex"
 export default {
     computed: {
         ...mapGetters({
-            meals: 'allMeals'
+            categories: 'getCategories'
         }),
         filterCategories: {
             get() {                
                 return this.$store.state.meals
             },
             set(category) {
-                this.$store.dispatch('FILTERED_MEALS_BY_CATEGORY', category)
+                this.$store.getters.getFilteredMealsByCategory(category)
             }
         }
     }
 }
 </script>
 <style scoped>
-ul {
-    display: grid;
-    grid-template-columns:repeat(25, 1fr);
-    grid-gap:1em;
-    list-style-type: none;
-}
 
 .hide {
     display: none;
