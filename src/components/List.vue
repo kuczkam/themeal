@@ -13,7 +13,10 @@
               </header>
           </div>
           <div v-if="isActive === index" class="meal-list__item-content-desc">
-            {{ list.strMeal }}
+            <h1>Instructions</h1>
+            <p>
+              {{ list.strInstructions }}
+            </p>
           </div>
         </li>
       </ul>
@@ -61,6 +64,7 @@ li.active {
 .meal-list__items {
   display: flex;
   flex-wrap: wrap;
+  position: relative;
 }
 
 .meal-list__item {
@@ -72,7 +76,7 @@ li.active {
 .meal-list__item-content {
   height: 250px;
   width: 250px;
-  border-radius: 3%;
+  border-radius: 10px;
   border: 1px solid #ccc;
   background-position: top;
   background-repeat: no-repeat;
@@ -83,8 +87,15 @@ li.active {
 }
 
 .meal-list__item-content-desc {
-  border-radius: 3%;
-  border: 1px solid #ccc;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    position: absolute;
+    width: 87.3%;
+    left: 83px;
+    height: 250px;
+    z-index: 1;
+    background: #fff;
+    margin-top: 17px;
 }
 
 .meal-list__item-content > header {
@@ -105,6 +116,10 @@ li.active {
   font-weight: normal;
   position: relative;
   z-index: 1;
+}
+
+li.meal-list__item.active {
+    margin-bottom: 287px;
 }
 
 * {
